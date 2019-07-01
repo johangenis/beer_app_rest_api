@@ -31,6 +31,6 @@ services:
     build: ./
     command: "mkdocs serve"
     volumes:
-      - ./:/app
+      - ./app:/app
     ports:
       - "8002:8002"
