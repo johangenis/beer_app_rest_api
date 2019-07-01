@@ -18,11 +18,11 @@ script:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login --username=johan.j.genis@gmail.com --password=1e1a2a38-ae6c-4e20-9732-179c024643ca registry.heroku.com;
-    docker tag web registry.heroku.com/beer-app-rest-api-prod/web;
-    docker push registry.heroku.com/beer-app-rest-api-prod/web;
+    docker tag web registry.heroku.com/beer-app-rest-api;
+    docker push registry.heroku.com/beer-app-rest-api;
     fi
   - if [ "$TRAVIS_BRANCH" == "qa" ]; then
     docker login --username=johan.j.genis@gmail.com --password=1e1a2a38-ae6c-4e20-9732-179c024643ca registry.heroku.com;
-    docker tag web registry.heroku.com/beer-app-rest-api-qa/web;
-    docker push registry.heroku.com/beer-app-rest-api-qa/web;
+    docker tag web registry.heroku.com/beer-app-rest-api;
+    docker push registry.heroku.com/beer-app-rest-api;
     fi
