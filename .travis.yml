@@ -13,4 +13,4 @@ script:
 deploy:
   provider: heroku
   api_key: 1e1a2a38-ae6c-4e20-9732-179c024643ca
-  app: beer_app_rest_api
+  app: beer-app-rest-api
