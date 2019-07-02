@@ -52,3 +52,22 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Beer(models.Model):
+    """Beers rated in the app."""
+
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=255)
+    ibu = models.IntegerField(default=55)
+    calories = models.FloatField(max_length=5, default=0)
+    abv = models.FloatField(max_length=3, default=0)
+    style = models.CharField(max_length=50, default="Bitter")
+    brewery_location = models.CharField(max_length=50, default="Some Brewery")
+    tags = models.ManyToManyField("Tag")
+
+    def __str__(self):
+        return self.name
