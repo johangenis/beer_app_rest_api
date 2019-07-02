@@ -9,7 +9,4 @@ router.register("tags", views.TagViewSet)
 
 app_name = "beer"
 
-urlpatterns = [
-    path("", include(router.urls)),
-    path("api/beer/", include("beer.urls")),
-]
+urlpatterns = [path("", include(router.urls))]
