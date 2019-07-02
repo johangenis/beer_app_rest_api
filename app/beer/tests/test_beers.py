@@ -55,10 +55,34 @@ class PrivateBeersAPITests(TestCase):
         )
         Beer.objects.create(user=user2, name="Budweiser")
 
-        beer = Beer.objects.create(user=self.user, name="Hansa")
+        beer = Beer.objects.create(user=self.user, name="Tafel")
 
         res = self.client.get(BEERS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data[0]["name"], beer.name)
+
+    def test_create_beer_successful(self):
+        """Test creating a new beer"""
+        payload = {
+            "name": "Hansa",
+            "ibu": "5",
+            "calories": "600",
+            "abv": "4.5",
+            "style": "bitter",
+            "brewery_location": "South Africa",
+        }
+        self.client.post(BEERS_URL, payload)
+
+        exists = Beer.objects.filter(
+            user=self.user, name=payload["name"]
+        ).exists()
+        self.assertTrue(exists)
+
+    def test_create_beer_invalid(self):
+        """Test creating invalid beer fails"""
+        payload = {"name": ""}
+        res = self.client.post(BEERS_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
