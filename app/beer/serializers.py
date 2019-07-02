@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Tag, Beer
+from core.models import Tag, Beer, Review
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -26,4 +26,13 @@ class BeerSerializer(serializers.ModelSerializer):
             "style",
             "brewery_location",
         )
+        read_only_fields = ("id",)
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    """Serializer for a review object"""
+
+    class Meta:
+        model = Review
+        fields = ("id", "beer_name", "aroma", "appearance", "taste", "overall")
         read_only_fields = ("id",)
