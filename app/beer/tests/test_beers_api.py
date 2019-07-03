@@ -13,6 +13,20 @@ from beer.serializers import BeerSerializer
 BEERS_URL = reverse("beer:beer-list")
 
 
+def sample_beer(user, **params):
+    """Create and return a sample beer"""
+    defaults = {
+        "name": "Sample Beer",
+        "ibu": 54,
+        "calories": 500,
+        "abv": 10,
+        "style": "Strong",
+        "brewery_location": "Cape Town",
+    }
+    defaults.update(params)
+    return Beer.objects.create(user=user, **defaults)
+
+
 class PublicBeersApiTests(TestCase):
     """Test the publically available beers API"""
 

@@ -31,10 +31,10 @@ class BeerViewSet(
 ):
     """Manage beers in the database"""
 
+    serializer_class = serializers.BeerSerializer
+    queryset = Beer.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    queryset = Beer.objects.all()
-    serializer_class = serializers.BeerSerializer
 
     def get_queryset(self):
         """Return objects for the current authenticated user only"""

@@ -58,12 +58,10 @@ class Beer(models.Model):
     """Beers rated in the app."""
 
     name = models.CharField(max_length=255)
-    # name = models.ForeignKey("Review", on_delete=models.CASCADE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
     name = models.CharField(max_length=255)
-    # name = models.ForeignKey("Review", on_delete=models.CASCADE)
     ibu = models.IntegerField(default=55)
     calories = models.FloatField(max_length=5, default=0)
     abv = models.FloatField(max_length=3, default=0)
