@@ -47,6 +47,18 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(tag), tag.name)
 
+    def test_review_str(self):
+        """Test the review string representation"""
+        review = models.Review.objects.create(
+            user=sample_user(),
+            name="Sample Review",
+            aroma=2,
+            appearance=3,
+            taste=5,
+        )
+
+        self.assertEqual(str(review), review.name)
+
     def test_beer_str(self):
         """Test the beer string representation"""
         beer = models.Beer.objects.create(
@@ -61,10 +73,10 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(beer), beer.name)
 
-    def test_review_str(self):
-        """Test the review string representation"""
-        review = models.Review.objects.create(
-            user=sample_user(), name="Castle Light"
-        )
-
-        self.assertEqual(str(review), review.name)
+    # def test_review_str(self):
+    #     """Test the review string representation"""
+    #     review = models.Review.objects.create(
+    #         user=sample_user(), name="Castle Light"
+    #     )
+    #
+    #     self.assertEqual(str(review), review.name)

@@ -61,7 +61,7 @@ class Beer(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=255)
+    # name = models.CharField(max_length=255)
     ibu = models.IntegerField(default=55)
     calories = models.FloatField(max_length=5, default=0)
     abv = models.FloatField(max_length=3, default=0)
@@ -76,24 +76,17 @@ class Beer(models.Model):
 class Review(models.Model):
     """Review object"""
 
-    # name = models.ManyToOneRel(field="name", to="Beer", field_name="name")
     name = models.CharField(max_length=50, default=None)
-    # name = models.ForeignKey("Beer", on_delete=models.CASCADE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
-    # name = models.ManyToOneRel(field="name", to="Beer", field_name="name")
-    name = models.CharField(max_length=50, default=None)
-    # name = models.ForeignKey("Beer", on_delete=models.CASCADE)
     aroma = models.IntegerField(default=2)
     appearance = models.IntegerField(default=2)
     taste = models.IntegerField(default=2)
-    # overall = models.IntegerField(default=0)
-    tags = models.ManyToManyField("Tag")
 
     @property
     def overall(self):
-        return sum(self.aroma, self.appearance, self.taste)
+        return self.aroma + self.appearance + self.taste
 
     def __str__(self):
         return self.name

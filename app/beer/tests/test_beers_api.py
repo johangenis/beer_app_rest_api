@@ -27,6 +27,11 @@ def sample_beer(user, **params):
     return Beer.objects.create(user=user, **defaults)
 
 
+# def detail_url(beer_id):
+#     """Return beer detail url"""
+#     return reverse("beer:beer-detail", args=[beer_id])
+
+
 class PublicBeersApiTests(TestCase):
     """Test the publically available beers API"""
 
@@ -52,12 +57,12 @@ class PrivateBeersAPITests(TestCase):
 
     def test_retrieve_beer_list(self):
         """Test retrieving a list of beers"""
-        Beer.objects.create(user=self.user, name="Guiness")
-        Beer.objects.create(user=self.user, name="Coors")
+        sample_beer(user=self.user)
+        sample_beer(user=self.user)
 
         res = self.client.get(BEERS_URL)
 
-        beers = Beer.objects.all().order_by("-name")
+        beers = Beer.objects.all().order_by("-id")
         serializer = BeerSerializer(beers, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -67,15 +72,15 @@ class PrivateBeersAPITests(TestCase):
         user2 = get_user_model().objects.create_user(
             "other@johangenis.com", "testpass"
         )
-        Beer.objects.create(user=user2, name="Budweiser")
-
-        beer = Beer.objects.create(user=self.user, name="Tafel")
+        sample_beer(user=user2)
+        sample_beer(user=self.user)
 
         res = self.client.get(BEERS_URL)
-
+        beer = Beer.objects.filter(user=self.user)
+        serializer = BeerSerializer(beer, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data[0]["name"], beer.name)
+        self.assertEqual(res.data, serializer.data)
 
     def test_create_beer_successful(self):
         """Test creating a new beer"""
@@ -100,3 +105,14 @@ class PrivateBeersAPITests(TestCase):
         res = self.client.post(BEERS_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    # def test_view_beer_detail(self):
+    #     """Test viewing a beer's detail"""
+    #     beer = sample_beer(user=self.user)
+    #     # beer.review.add(sample_review(user=self.user))
+    #
+    #     url = detail_url(beer.id)
+    #     res = self.client.get(url)
+    #
+    #     serializer = BeerDetailSerlializer(beer)
+    #     self.assertEqual(res.data, serializer.data)

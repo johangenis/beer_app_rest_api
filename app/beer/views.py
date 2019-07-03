@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Tag, Beer
+from core.models import Tag, Beer, Review
 
 from beer import serializers
 
@@ -43,3 +43,16 @@ class BeerViewSet(
     def perform_create(self, serializer):
         """Create a new beer"""
         serializer.save(user=self.request.user)
+
+
+class ReviewViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    """Manage reviews in the database"""
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = Review.objects.all()
+    serializer_class = serializers.ReviewSerializer
+
+    def get_queryset(self):
+        """Return objects for the current authenticated user only"""
+        return self.queryset.filter(user=self.request.user).order_by("-name")

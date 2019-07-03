@@ -34,5 +34,5 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ("id", "beer_name", "aroma", "appearance", "taste", "overall")
+        fields = ("id", "name", "aroma", "appearance", "taste", "overall")
         read_only_fields = ("id",)

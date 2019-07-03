@@ -6,7 +6,8 @@ from beer import views
 
 router = DefaultRouter()
 router.register("tags", views.TagViewSet)
-router.register("beer", views.BeerViewSet)
+router.register("beers", views.BeerViewSet)
+router.register("reviews", views.ReviewViewSet)
 
 app_name = "beer"
 
