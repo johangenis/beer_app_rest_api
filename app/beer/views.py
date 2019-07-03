@@ -45,7 +45,9 @@ class BeerViewSet(
         serializer.save(user=self.request.user)
 
 
-class ReviewViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class ReviewViewSet(
+    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin
+):
     """Manage reviews in the database"""
 
     authentication_classes = (TokenAuthentication,)
